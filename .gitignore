@@ -10,3 +10,13 @@ Thumb.db
 /tools/sphinx-to-github/build
 /tools/sphinx-to-github/dist
 /tools/sphinx-to-github/sphinxtogithub.egg-info
+node_modules
+*/node_modules
+npm-debug.log
+*/npm-debug.log
+.sw*
+.idea/*
+.editorconfig
+.jshintrc
+.travis.yml
+.sass-cache/
