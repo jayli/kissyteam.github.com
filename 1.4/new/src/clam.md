@@ -1,20 +1,10 @@
 # KISSY 项目构建工具，Generator-clam
 
-<script async class="speakerdeck-embed" data-id="a688a530ec4a0130128752852468ff6c" data-ratio="1.33333333333333" src="//speakerdeck.com/assets/embed.js"></script>
-
 <p></p>
-
-目标：是通过`yo clam`来将你引路到Grunt，帮助你更熟练的使用Grunt。
-
-面向人群：面向阿里系前端工程师，帮助你创建标准的KISSY项目结构代码和Widgets代码。
-
-愿景：打造一款无负担的前端开发脚手架工具，打破产品间的代码共享壁垒，让你的代码充溢阳光沙滩般的气息。
 
 ![](http://img04.taobaocdn.com/tps/i4/T1C5hpXwXeXXbkQf6j-210-45.jpg)
 
-环境依赖：Node、Npm，视频演示：[http://ascii.io/a/4384](http://ascii.io/a/4384)。
-
-![](./h/example.png)
+环境依赖：Node、Npm，[工具原理介绍PPT](https://speakerdeck.com/lijing00333/generator-clam)。视频演示：[http://ascii.io/a/4384](http://ascii.io/a/4384)。
 
 ## 安装 & 基本命令
 
