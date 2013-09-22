@@ -11,77 +11,34 @@
 	<script src="http://g.tbcdn.cn/trip/kissy/1.4.0/seed-min.js"></script>
 </head>
 <body>
+	<div id="log"></div>
 	<button class="c1">iii<span>sdf</span></button>
 	<button class="c2">iii<span>sdf</span></button>
 	<button class="contin">iii</button>
+
+	<script type='kissy/xtemplate' id='tpl'>
+		{{include "sub-tpl-3"}}
+	</script>
+	<script>
+		var o = {
+			title:1
+		};
+	</script>
 	
 	<script>
+		function log(str){
+			var log = document.getElementById('log');
+			log.innerHTML = log.innerHTML + '<p>'+ str.replace(/</ig,'&lt;').replace(/>/ig,'&gt;').replace(/\n/ig,'<br>') +'</p>';
+		}
 		var S = KISSY;
 
-		S.config('debug',true);
 
-		 KISSY.add('pp', function (S) {
-				// 自定义插件
-				function Plugin(cfg) {
-					this.config = cfg || {};
-					this.pluginId = 'aaa';
-				}
+		var Dom;
+		KISSY.use('node', function (S, Node) {
+			Dom = S.require('dom');
 
-				Plugin.prototype.pluginInitializer = function () {
-					var cfg = this.config;
-					console.log('插件运行');
-				};
-				Plugin.prototype.pluginDestructor = function(){
-					console.log('卸载插件');
-				};
-
-				return Plugin;
-
-			});
-
-
-		S.use('base,pp,node,event',function(S,Base,P){
-			var Header = Base.extend({
-				_onSetA:function(){
-
-				},
-				initializer:function(){
-					var self = this;
-				}
-			},{
-				ATTRS: {
-					A:{
-						value:'abc'
-					}
-				}
-			});
-				
-
-			var p = new P();
-			var a = new Header({
-				A:1,
-				plugins:[p]
-				
-			});
-			a.unplug('aaa');
-
-			// a.plug(new P());
-			
-			S.Event.on('.c1','click.one',function(){
-				debugger;
-				console.log('a');
-			});
-			S.Event.on('.c1','click.two',function(){
-				console.log('b');
-			});
-			S.Event.remove('.c1','.two');
-
-			S.one('button').attr('data-x','asd');
-			console.log(S.one('button').data('data-x'));
 
 		});
-
-
 
 
 	</script>

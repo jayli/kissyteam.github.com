@@ -10,13 +10,15 @@
 2. 自定义事件机制：CustomEvent
 3. 代码插拔机制：Plugin
 
+![](http://gtms04.alicdn.com/tps/i4/T1a55UFbtaXXbsDJoj-389-190.png)
+
 这三类功能被封装在`base`模块中，这样来载入base；
 
 	KISSY.use('base',function(S,Base){
 		// Your Code...
 	});
 
-> 在KISSY 1.3.x 中有一个别名RichBase，1.4.0 及以后版本将统一为Base
+> 在KISSY 1.3.x 中有一个别名RichBase，1.4.0 及以后版本将统一为Base，在实现上，Base 使用了自定义事件掺元对象`CustomEvent.Target`和内置的掺元对象`Attribute`。
 
 我们来分别看下Base的这几个特性
 
@@ -132,10 +134,26 @@ Base提供了对属性值初始化的同步以及变化的事件监听。上面�
 		console.log(e.message)      // ==> 'Woof! I just barked!'
 	});
 
+如果Dog没有被定义过，我想直接定义一个类，这样做（是上一段代码的另一种写法）：
+
+	// 直接定义一个类 Dog 
+	var Dog = S.Base.extend({
+		initializer:function(){
+			var self = this;
+		},
+		bark:function(){
+			this.fire('bark', {
+				message: 'Woof! I just barked!'
+			});
+		}
+	},{/*ATTRS*/});
+
+	var dog = new Dog();
+
 
 ## 2，自定义事件 CustomEvent
 
-继承自Base的对象可以分发自定义事件，即实例上有`fire()`方法。比如上一段代码，bark() 函数中触发了一个自定义事件`bark`，绑定这个事件即可收到这个事件。
+继承自Base的对象可以分发自定义事件，即实例上有`fire()`方法。比如上一段代码，bark() 函数中触发了一个自定义事件`bark`，绑定这个事件即可收到这个事件。具体用法可参照[Event自定义事件部分](event.html)。
 
 ## 3，插件机制：Plugin
 

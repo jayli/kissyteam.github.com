@@ -26,6 +26,7 @@
 	- [Base](base.html)，包括Attr、自定义事件、插件机制
 	- [xtemplate](xtemplate.html)
 	- [Mobile 开发最佳实践](mobile.html)
+	- [在 Node 环境中运行 kissy](nodejs-kissy.html)
 - [项目构建工具](tools.html)
 	- [KISSY 模块依赖抽取工具 KMC（Kissy Module Complier）](kmc.html)
 	- [ABC](http://abc.f2e.taobao.net/)
@@ -33,17 +34,16 @@
 - [KISSY 组件开发](http://gallery.kissyui.com/guide)
 	- [Generator-kissy-gallery 工具](http://gallery.kissyui.com/quickstart)
 - [第三方代码库](third-party-lib.html)
-- 面向第三方安全的 KISSY
+- [面向第三方安全的 KISSY](https://github.com/lorrylockie/tpap/wiki)，组件开发者必读
 - [KISSY 浏览器兼容基准（GBS）](gbs.html)
 - [历史版本](history.html)
 - KISSY 核心代码规范
-	- [HTML 编码规范](xx)
-	- [CSS 编码规范](xx)
-	- [JavaScript 编码规范](xx)
-- [如何为 KISSY 贡献代码](https://github.com/kissyteam/kissy/blob/master/CONTRIBUTING.md)
+	- [HTML/CSS 编码规范](http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml)
+	- [JavaScript 编码规范](http://docs.kissyui.com/source/tutorials/style-guide/google/javascriptguide.xml)
+- [如何为 KISSY Core 贡献代码](https://github.com/kissyteam/kissy/blob/master/CONTRIBUTING.md)
 - [1.3.x -> 1.4.0 升级指南](xx)
-- FAQ
-- KISSY 核心小组
+- [FAQ](faq.md)
+- [KISSY 核心小组](core-team.html)
 
 
 -----------------------------------------------

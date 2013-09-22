@@ -20,11 +20,16 @@
 
 <body class="">
     <nav id="sidebar">
-    <header><a href="index.html"><img src="http://gtms04.alicdn.com/tps/i4/T1ceiPFbpcXXcljp_h-200-89.png"></a></header>
+    <header>
+		<a href="index.html">
+			<!--img src="http://gtms04.alicdn.com/tps/i4/T1ceiPFbpcXXcljp_h-200-89.png"-->
+			<img src="templates/assets/img/logo_6.png">
+		</a>
+	</header>
     <ul>
       <li class="nav-divider"><a href="index.html"><img src="templates/assets/img/icon-home.png">首页</a></li>
       <li class="nav-divider"><a href="why-kissy.html"><img src="templates/assets/img/icon-why.png">Why KISSY?</a></li>
-      <li><a href="get-started.html"><img src="templates/assets/img/icon-getting-started.png">Getting Started (1.4.0)</a></li>
+      <li><a href="get-started.html"><img src="templates/assets/img/icon-getting-started.png">KISSY 1.4.0 教程大纲</a></li>
       <li class="nav-sub"><a href="module-map.html">核心模块列表</a></li>
       <li class="nav-sub"><a href="kmd.html">KISSY 模块规范 (KMD)</a></li>
       <li class="nav-sub"><a href="gbs.html">浏览器兼容基准(GBS)</a></li>
@@ -42,14 +47,13 @@
       <li class="nav-sub"><a href="">面向第三方安全的 KISSY</a></li>
       <li class="nav-sub"><a href="http://www.builive.com/demo/index.php">BUI</a></li>
       <li class="nav-sub nav-divider"><a href="http://work.tmall.net/muidoc/build/">MUI</a></li>
-      <li><a href="">为 KISSY 贡献代码</a></li>
-      <li class="nav-sub"><a href="">HTML 编码规范</a></li>
-      <li class="nav-sub"><a href="">CSS 编码规范</a></li>
-      <li class="nav-sub nav-divider"><a href="">JavaScript 编码规范</a></li>
+      <li><a href="https://github.com/kissyteam/kissy/blob/master/CONTRIBUTING.md">为 KISSY Core 贡献代码</a></li>
+      <li class="nav-sub"><a href="http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml">HTML/CSS编码规范</a></li>
+      <li class="nav-sub nav-divider"><a href="http://docs.kissyui.com/source/tutorials/style-guide/google/javascriptguide.xml">JavaScript 编码规范</a></li>
 	  <li><a href=""><img src="templates/assets/img/icon-documentation.png">1.3.x->1.4.0 升级指南</a></li>
-	  <li><a href=""><img src="templates/assets/img/icon-faqs.png">FAQ</a></li>
-      <li><a href=""><img src="templates/assets/img/icon-github.png">GitHub</a></li>
-	  <li><a href=""><img src="templates/assets/img/icon-google-plus.png">KISSY 核心小组</a></li>
+	  <li><a href="faq.html"><img src="templates/assets/img/icon-faqs.png">FAQ</a></li>
+      <li><a href="https://github.com/kissyteam/kissy"><img src="templates/assets/img/icon-github.png">GitHub</a></li>
+	  <li><a href="core-team.html"><img src="templates/assets/img/icon-google-plus.png">KISSY 核心小组</a></li>
     </ul>
   </nav>
 
@@ -64,7 +68,48 @@
 <pre><code>KISSY.use(&#39;io&#39;,function(S,IO){
     // use IO
 });</code></pre>
-<p>方便起见，你仍可以用<code>S.Ajax</code>，<code>S.Ajax === S.IO</code>。</p>
+<p>方便起见，你仍可以用<code>S.Ajax</code>，<code>S.Ajax === S.IO</code>。下面介绍个如何通过 io 模块去请求 flickr 上提供的图片数据。看示例：</p>
+<p><div class="demo"><button id="fetch-btn" autocomplete="off" type="button" class="btn btn-default">Fetch Photo</button><div id="photo-list"></div></div></p>
+<script>
+     KISSY.use('node,io',function (S,Node,IO) {
+         var API = 'http://api.flickr.com/services/rest/',
+             params = {
+                 'method': 'flickr.favorites.getPublicList',
+                 'api_key': '5d93c2e473e39e9307e86d4a01381266',
+                 'user_id': '26211501@N07',
+                 'per_page': 10,
+                 'format': 'json'
+             },
+             photoList = Node.one('#photo-list');
+         Node.one('#fetch-btn').on('click', function() {
+             Node.one(this).attr('disabled', true);
+             photoList.addClass('loading');
+             Node.one('#fetch-btn')[0].disabled=true;
+
+             new IO({
+                 url: API,
+                 data: params,
+                 dataType:'jsonp',
+                 'jsonp':'jsoncallback',
+                 success:function(data){
+                     var html = 'Fetch photo failed, pls try again!';
+                     if (data.stat === 'ok') {
+                         html = '';
+                         S.each(data.photos.photo, function(item, i){
+                             html += '<img src="http://farm' + item.farm + '.static.flickr.com/'
+                                     + item.server + '/' + item.id + '_' + item.secret + '_t.jpg" />';
+                         });
+                     }
+                     photoList.removeClass('loading').html(html);
+                 },
+                 complete:function(){
+                     Node.one('#fetch-btn')[0].disabled=false;
+                 }
+             });
+         });
+     });
+</script>
+
 <h3>IO <code>&lt;class&gt;</code></h3>
 <p> <code>IO(cfg) =&gt; Promise</code></p>
 <p>IO 全局方法，构建 io 请求并发送，传入一个JSON对象，返回一个<a href="promise.html">Promise</a>实例。</p>
@@ -574,6 +619,26 @@ KISSY.all(&#39;#myFileUploadButton&#39;).on(&#39;click&#39;,function(){
 <p>服务器返回失败后触发.事件对象同 start 事件.</p>
 <h3>complete <code>&lt;event&gt;</code></h3>
 <p>服务器返回（无论成功或失败）后触发.事件对象同 start 事件.</p>
+<style>
+#photo-list img  {
+border: 1px solid grey;
+padding: 4px;
+margin: 8px;
+}
+.loading {
+background: transparent url(http://docs.kissyui.com/source/_static/loading.gif) no-repeat;
+width: 100px;
+height: 100px;
+margin: 20px;
+}
+div.demo {
+background: none repeat scroll 0 0 #F8F8F6;
+border: 1px solid #D1D1D1;
+border-radius: 2px 2px 2px 2px;
+margin: 8px 0;
+padding: 10px;
+}
+</style>
 
 
       

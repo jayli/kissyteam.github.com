@@ -20,11 +20,16 @@
 
 <body class="">
     <nav id="sidebar">
-    <header><a href="index.html"><img src="http://gtms04.alicdn.com/tps/i4/T1ceiPFbpcXXcljp_h-200-89.png"></a></header>
+    <header>
+		<a href="index.html">
+			<!--img src="http://gtms04.alicdn.com/tps/i4/T1ceiPFbpcXXcljp_h-200-89.png"-->
+			<img src="templates/assets/img/logo_6.png">
+		</a>
+	</header>
     <ul>
       <li class="nav-divider"><a href="index.html"><img src="templates/assets/img/icon-home.png">首页</a></li>
       <li class="nav-divider"><a href="why-kissy.html"><img src="templates/assets/img/icon-why.png">Why KISSY?</a></li>
-      <li><a href="get-started.html"><img src="templates/assets/img/icon-getting-started.png">Getting Started (1.4.0)</a></li>
+      <li><a href="get-started.html"><img src="templates/assets/img/icon-getting-started.png">KISSY 1.4.0 教程大纲</a></li>
       <li class="nav-sub"><a href="module-map.html">核心模块列表</a></li>
       <li class="nav-sub"><a href="kmd.html">KISSY 模块规范 (KMD)</a></li>
       <li class="nav-sub"><a href="gbs.html">浏览器兼容基准(GBS)</a></li>
@@ -42,14 +47,13 @@
       <li class="nav-sub"><a href="">面向第三方安全的 KISSY</a></li>
       <li class="nav-sub"><a href="http://www.builive.com/demo/index.php">BUI</a></li>
       <li class="nav-sub nav-divider"><a href="http://work.tmall.net/muidoc/build/">MUI</a></li>
-      <li><a href="">为 KISSY 贡献代码</a></li>
-      <li class="nav-sub"><a href="">HTML 编码规范</a></li>
-      <li class="nav-sub"><a href="">CSS 编码规范</a></li>
-      <li class="nav-sub nav-divider"><a href="">JavaScript 编码规范</a></li>
+      <li><a href="https://github.com/kissyteam/kissy/blob/master/CONTRIBUTING.md">为 KISSY Core 贡献代码</a></li>
+      <li class="nav-sub"><a href="http://google-styleguide.googlecode.com/svn/trunk/htmlcssguide.xml">HTML/CSS编码规范</a></li>
+      <li class="nav-sub nav-divider"><a href="http://docs.kissyui.com/source/tutorials/style-guide/google/javascriptguide.xml">JavaScript 编码规范</a></li>
 	  <li><a href=""><img src="templates/assets/img/icon-documentation.png">1.3.x->1.4.0 升级指南</a></li>
-	  <li><a href=""><img src="templates/assets/img/icon-faqs.png">FAQ</a></li>
-      <li><a href=""><img src="templates/assets/img/icon-github.png">GitHub</a></li>
-	  <li><a href=""><img src="templates/assets/img/icon-google-plus.png">KISSY 核心小组</a></li>
+	  <li><a href="faq.html"><img src="templates/assets/img/icon-faqs.png">FAQ</a></li>
+      <li><a href="https://github.com/kissyteam/kissy"><img src="templates/assets/img/icon-github.png">GitHub</a></li>
+	  <li><a href="core-team.html"><img src="templates/assets/img/icon-google-plus.png">KISSY 核心小组</a></li>
     </ul>
   </nav>
 
@@ -71,7 +75,7 @@ KISSY.use(&#39;node&#39;,function(S,Node){
     // Your Code here...
 });</code></pre>
 <p>页面生命周期内始终存在全局对象<code>KISSY</code>。KISSY 采用弱沙箱的设计，多个沙箱共享同一份 KISSY 对象，即沙箱A对KISSY的修改会影响到沙箱B，因此，不通过API就对KISSY作任何修改将会非常危险。回调函数传入的第一个参数永远是<code>KISSY</code>全局对象，紧跟着的参数将会传回模块对象。形如<code>use(&#39;a,b,c&#39;,function(S,A,B,C){})</code>。被依赖的模块实现会返回一个对象（或类），都可以通过这种方式带入当前沙箱中，KISSY 的沙箱之间通过这种方法相互传递信息，避免全局对象的污染。沙箱内定义的变量亦不会污染全局命名空间。</p>
-<p>创建 KISSY 沙箱时你需要指定要载入的模块，KISSY 的功能是模块化的，包括<code>node</code>，<code>event</code>，<code>ajax</code>等。这个例子中载入了<code>node</code>模块，在沙箱中可以通过回调参数来使用<code>node</code>的 API。<strong>特别的</strong>，<code>node</code>模块中最常用的 API 被挂载在 KISSY 对象上，作为快捷调用方式。比如<code>S.all</code>和<code>S.one</code>。</p>
+<p>创建 KISSY 沙箱时你需要指定要载入的模块，KISSY 的功能是模块化的，包括<code>node</code>，<code>event</code>，<code>ajax</code>（在1.4.x中被<code>io</code>取代）等。这个例子中载入了<code>node</code>模块，在沙箱中可以通过回调参数来使用<code>node</code>的 API。<strong>特别的</strong>，<code>node</code>模块中最常用的 API 被挂载在 KISSY 对象上，作为快捷调用方式。比如<code>S.all</code>和<code>S.one</code>。</p>
 <p>KISSY 会自动计算模块依赖和模块去重，将所需模块的最小子集载入到页面中。一旦 node 模块加载完成，就会执行沙箱的回调逻辑。<strong>注意</strong>：沙箱回调为异步执行，不管是否已经预先载入了 node。所以两个并列的沙箱的执行时机是不确定的。开发者不应当去关心沙箱的先后顺序。</p>
 <blockquote>
 <p>注意，这种使用方法是<strong>错误的</strong>：<code>var Node = KISSY.use(&#39;node&#39;);</code></p>
