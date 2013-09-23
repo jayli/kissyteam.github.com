@@ -63,72 +63,44 @@
     <article>
       
 
-	<p><style>
-h3 {
-    color:blue;
-}
-</style></p>
-<h1>path</h1>
-<blockquote>
-<p>当前浏览器地址的有关信息</p>
-</blockquote>
-<p>可以直接通过KISSY.Path调用：</p>
-<pre><code>KISSY.Path.do_sth();</code></pre>
-<p>也可以通过沙箱来调用</p>
-<pre><code>KISSY.use(&#39;path&#39;,function(S,Path){
-    Path.do_sth();// 执行操作
+	<h1>resizable</h1>
+<p>缩放功能插件，<a href="http://docs.kissyui.com/source/raw/demo/resizable/demo1.html">Demo</a></p>
+<p>调用：</p>
+<pre><code>KISSY.use(&#39;resizable&#39;,function(S,Resizable){
+    // use Resizable
 });</code></pre>
-<h3>basename()  <code>&lt;static&gt;</code></h3>
-<p><code>basename(path,ext) =&gt; String</code></p>
-<p>获取域名中的文件名</p>
-<h4>parameter</h4>
-<ul>
-<li>path：String，路径字符串</li>
-<li>ext：String，需要过滤的扩展名，比如<code>.html</code></li>
-</ul>
-<h4>return</h4>
-<p>返回文件名</p>
-<h4>example</h4>
-<pre><code>Path.basename(&#39;http://www.taobao.com/index.html&#39;,&#39;.html&#39;);//=&gt; index</code></pre>
-<h3>dirname()  <code>&lt;static&gt;</code></h3>
-<p><code>dirname(path) =&gt; String</code></p>
-<p>返回path所指的文件所在的目录路径</p>
-<h4>parameter</h4>
-<p>path（String），Path全称</p>
-<h4>example</h4>
-<pre><code>Path.dirname(&#39;/home/bachi/daily/index.html&#39;);//=&gt;/home/bachi/daily</code></pre>
-<h3>extname()  <code>&lt;static&gt;</code></h3>
-<p><code>extname(path) =&gt; String</code></p>
-<p>获取路径所指文件的扩展名，比如<code>.html</code></p>
-<h4>example</h4>
-<pre><code>Path.extname(&#39;/home/bachi/daily/index.html&#39;);//=&gt; .html</code></pre>
-<h3>join()  <code>&lt;static&gt;</code></h3>
-<p><code>join(p1,p2,...) =&gt; String</code></p>
-<p>以此拼接p1、p2...,遇到<code>../</code>时回退一级目录</p>
-<h4>example</h4>
-<pre><code>// ../../ 表示回退两级目录
-Path.join(&#39;/home/bachi/daily/&#39;,&#39;project&#39;,&#39;../../&#39;,&#39;index.html&#39;);//=&gt; /home/bachi/index.html</code></pre>
-<h3>normalize()  <code>&lt;static&gt;</code></h3>
-<p><code>normalize(path) =&gt; String</code></p>
-<p>将path中的无关内容清理掉，返回直接的路径信息</p>
-<h4>example</h4>
-<pre><code>Path.normalize(&#39;x/y/../z&#39;); // =&gt; x/z/
-Path.normalize(&#39;x/y/z/../&#39;); // =&gt; x/y/</code></pre>
-<h3>relative()  <code>&lt;static&gt;</code></h3>
-<p><code>relative(from,to) =&gt; String</code></p>
-<p>计算相对路径</p>
-<h4>example</h4>
-<pre><code>Path.relative(&#39;x/&#39;,&#39;x/y/z&#39;); // =&gt; &#39;y/z&#39;
-Path.relative(&#39;x/t/z&#39;,&#39;x/&#39;); // =&gt; &#39;../../&#39;</code></pre>
-<h3>resolve()  <code>&lt;static&gt;</code></h3>
-<p><code>resolve([from ...], to) =&gt; String</code></p>
-<p>得到绝对地址，算法逻辑参照NodeJS <a href="http://nodejs.org/api/path.html#path_path_resolve_from_to">Path.resolve</a>。</p>
-<h4>example</h4>
-<pre><code>KISSY.Path.resolve(&#39;wwwroot&#39;, &#39;static_files/png/&#39;, &#39;../gif/image.gif&#39;)
-// =&gt; &#39;wwwroot/static_files/gif/image.gif&#39;
+<p>初始化示例：</p>
+<pre><code>var r = new Resizable({
+    node:&quot;#something-can-resize&quot;,
+    // 指定可拖动的位置
+    handlers:[&quot;b&quot;,&quot;t&quot;,&quot;r&quot;,&quot;l&quot;,&quot;tr&quot;,&quot;tl&quot;,&quot;br&quot;,&quot;bl&quot;],
 
-KISSY.Path.resolve(&#39;/foo/bar&#39;, &#39;/tmp/file/&#39;)
-// =&gt;    &#39;/tmp/file&#39;</code></pre>
+    // 可选, 设置最小/最大 宽高
+    minHeight:50,
+    minWidth:50,
+    maxHeight:445,
+    maxWidth:700
+});</code></pre>
+<h2>API</h2>
+<h3>配置参数</h3>
+<ul>
+<li>node:被缩放的节点</li>
+<li>minWidth：默认为0, 表示拖动缩放的最小宽度.</li>
+<li>minHeight：默认为0, 表示拖动缩放的最小高度.</li>
+<li>maxWidth：默认为 Number.MAX_VALUE, 表示拖动缩放的最大宽度.</li>
+<li>maxHeight：默认为 Number.MAX_VALUE, 表示拖动缩放的最大高度.</li>
+<li>handlers：数组，默认为 [], 表示可拖动元素的哪些位置来进行缩放.可取下列值: “b”,”t”,”r”,”l”,”tr”,”tl”,”br”,”bl”． 其中, t,b,l,r 分别表示 top,bottom,left,right, 加上组合共八种取值, 可在上, 下, 左, 右以及左上, 左下, 右上, 右下进行拖动.</li>
+</ul>
+<h3>实例方法</h3>
+<ul>
+<li>destroy() 销毁实例</li>
+</ul>
+<h3>实例提供的事件</h3>
+<ul>
+<li>resizeStart：开始拖放后触发</li>
+<li>resize：拖放中触发</li>
+<li>resizeEnd：拖放结束后触发</li>
+</ul>
 
 
       
